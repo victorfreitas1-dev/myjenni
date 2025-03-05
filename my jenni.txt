@@ -3,52 +3,269 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>EU TE AMO JENNIFER</title>
+    <title>Jenni Fit Store</title>
     <style>
         body {
             font-family: Arial, sans-serif;
-                background-color: #DDA0DD;
-            text-align: center;
+            background: url('https://via.placeholder.com/1200x800') no-repeat center center fixed;
+            background-size: cover;
+            padding: 10px;
             margin: 0;
-            padding: 0;
         }
         .container {
-            max-width: 1000px;
-            margin: 20px auto;
-        }
-        h1 {
-            color: #d63384;
-        }
-        .gallery {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 15px;
-            padding: 20px;
-        }
-        .gallery img {
-            width: 100%;
-            height: auto;
+            max-width: 1200px;
+            margin: auto;
+            background: rgba(255, 255, 255, 0.95);
+            padding: 10px;
             border-radius: 10px;
-            transition: transform 0.3s ease-in-out;
-            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
         }
-        .gallery img:hover {
-            transform: scale(1.1);
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: white;
+            padding: 10px;
+            box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            margin-bottom: 10px;
+        }
+        .header h1 {
+            font-size: 24px; /* Tamanho menor para celulares */
+            font-weight: bold;
+            text-transform: uppercase;
+            color: #ff4500;
+            letter-spacing: 1px;
+            margin: 0;
+        }
+        .cart {
+            position: relative;
+            cursor: pointer;
+        }
+        .cart-count {
+            background: red;
+            color: white;
+            font-size: 12px;
+            padding: 2px 6px;
+            border-radius: 50%;
+            position: absolute;
+            top: -5px;
+            right: -10px;
+        }
+        .cart-items {
+            display: none;
+            background: white;
+            padding: 10px;
+            border-radius: 10px;
+            box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+            position: absolute;
+            right: 0;
+            top: 40px;
+            width: 250px; /* Largura menor para celulares */
+            z-index: 10;
+        }
+        .cart-items.active {
+            display: block;
+        }
+        .cart-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 8px 0;
+            border-bottom: 1px solid #eee;
+        }
+        .cart-item:last-child {
+            border-bottom: none;
+        }
+        .cart-item button {
+            background: #ff4500;
+            color: white;
+            border: none;
+            padding: 4px 8px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 12px; /* Tamanho menor para celulares */
+        }
+        .cart-item button:hover {
+            background: #e63900;
+        }
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); /* Colunas menores para celulares */
+            gap: 10px;
+        }
+        .card {
+            background: white;
+            padding: 10px;
+            border-radius: 10px;
+            box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+        }
+        .card img {
+            width: 100%;
+            max-height: 150px; /* Altura menor para celulares */
+            object-fit: cover;
+            border-radius: 10px;
+        }
+        .button {
+            margin-top: 10px;
+            padding: 8px;
+            background: #007bff;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: background 0.2s;
+            font-size: 14px; /* Tamanho menor para celulares */
+            width: 100%; /* Botão ocupa toda a largura */
+        }
+        .button:hover {
+            background: #0056b3;
+        }
+        .toast {
+            position: fixed;
+            bottom: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: #28a745;
+            color: white;
+            padding: 8px 16px;
+            border-radius: 5px;
+            box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+            display: none;
+            z-index: 1000;
+            font-size: 14px; /* Tamanho menor para celulares */
+        }
+        .toast.active {
+            display: block;
+            animation: fadeInOut 3s ease-in-out;
+        }
+        @keyframes fadeInOut {
+            0%, 100% { opacity: 0; }
+            10%, 90% { opacity: 1; }
+        }
+
+        /* Media Queries para telas menores */
+        @media (max-width: 600px) {
+            .header h1 {
+                font-size: 20px; /* Tamanho menor para telas muito pequenas */
+            }
+            .cart-items {
+                width: 200px; /* Largura menor para telas muito pequenas */
+            }
+            .grid {
+                grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); /* Colunas ainda menores */
+            }
+            .card img {
+                max-height: 120px; /* Altura menor para telas muito pequenas */
+            }
+            .button {
+                font-size: 12px; /* Tamanho menor para telas muito pequenas */
+            }
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>❤ Our Moments ❤</h1>
-        <div class="gallery">
-            <img src="https://media.discordapp.net/attachments/1001567898982174753/1342470508565758064/567BBCF0-DDDB-411C-9C3D-760FADD54665.jpg?ex=67b9c097&is=67b86f17&hm=11ecd64522cdb325284b27e6ffcb71a46a43613be323955cb4b4a7d2bca576bb&=&format=webp&width=360&height=499" alt="Foto romântica 1">
-            <img src="https://media.discordapp.net/attachments/1001567898982174753/1342470509169741867/IMG_8868.png?ex=67b9c097&is=67b86f17&hm=09679a75104c6c50db20761c47c59e900102f5ed75badc01a179addee34bc907&=&format=webp&quality=lossless&width=360&height=499" alt="Foto romântica 2">
-            <img src="https://media.discordapp.net/attachments/1001567898982174753/1342470509635305502/IMG_8864.png?ex=67b9c097&is=67b86f17&hm=1ff0f54b05af62710ac06c26bc07a204adef95a0720924705e8f3ee09f55ef76&=&format=webp&quality=lossless&width=360&height=499" alt="Foto romântica 3">
-            <img src="https://media.discordapp.net/attachments/1001567898982174753/1342470510037962752/IMG_8863.png?ex=67b9c097&is=67b86f17&hm=9cde239866287758453a584035e500f190631468edefadf71fe27b78236da7ac&=&format=webp&quality=lossless&width=360&height=499" alt="Foto romântica 4">
-            <img src="https://media.discordapp.net/attachments/1001567898982174753/1342472366562742312/F10541A0-1CD4-4CEB-B9A5-9FBAB52794B4.jpg?ex=67b9c252&is=67b870d2&hm=9cadd92ef057a1ff31b79dee113606e168a83d06aed3a2809727b5b882d6c0b9&=&format=webp&width=360&height=499" alt="Foto romântica 5">
-            <img src="https://media.discordapp.net/attachments/1001567898982174753/1342474135397470331/47209232-FFD8-48E2-B48A-CFBB3C7B4B77.png?ex=67b9c3f7&is=67b87277&hm=411fd14c8efddcf31d9e2eb4208aa44afe8858cf89a85607090ed1c89be5031e&=&format=webp&quality=lossless&width=360&height=499" alt="Foto romântica 6">
-
+        <div class="header">
+            <h1>Jenni Fit Store</h1>
+            <div class="cart" onclick="toggleCarrinho()">
+                🛒<span class="cart-count" id="cart-count">0</span>
+                <div class="cart-items" id="cart-items"></div>
+            </div>
         </div>
+        <div class="grid" id="produtos"></div>
     </div>
+    <div class="toast" id="toast">Item adicionado ao carrinho!</div>
+
+    <script>
+        const produtos = [
+            { id: 1, nome: "Legging Fitness", preco: "R$99,90", imagem: "https://via.placeholder.com/200" },
+            { id: 2, nome: "Top Esportivo", preco: "R$59,90", imagem: "https://via.placeholder.com/200" },
+            { id: 3, nome: "Camiseta Dry Fit", preco: "R$79,90", imagem: "https://via.placeholder.com/200" },
+            { id: 4, nome: "Tênis Esportivo", preco: "R$199,90", imagem: "https://via.placeholder.com/200" },
+            { id: 5, nome: "Luvas de Academia", preco: "R$39,90", imagem: "https://via.placeholder.com/200" },
+            { id: 6, nome: "Shorts Fitness", preco: "R$69,90", imagem: "https://via.placeholder.com/200" }
+        ];
+
+        let carrinho = JSON.parse(localStorage.getItem("carrinho")) || [];
+
+        function adicionarAoCarrinho(produto) {
+            carrinho.push(produto);
+            localStorage.setItem("carrinho", JSON.stringify(carrinho));
+            atualizarCarrinho();
+            mostrarToast();
+        }
+
+        function removerDoCarrinho(index) {
+            carrinho.splice(index, 1);
+            localStorage.setItem("carrinho", JSON.stringify(carrinho));
+            atualizarCarrinho();
+        }
+
+        function atualizarCarrinho() {
+            document.getElementById("cart-count").innerText = carrinho.length;
+            let cartItemsDiv = document.getElementById("cart-items");
+            cartItemsDiv.innerHTML = "<h3>Carrinho</h3>";
+            if (carrinho.length === 0) {
+                cartItemsDiv.innerHTML += "<p>Seu carrinho está vazio.</p>";
+            } else {
+                carrinho.forEach((item, index) => {
+                    cartItemsDiv.innerHTML += `
+                        <div class="cart-item">
+                            <span>${item.nome} - ${item.preco}</span>
+                            <button onclick="removerDoCarrinho(${index})">Remover</button>
+                        </div>
+                    `;
+                });
+                cartItemsDiv.innerHTML += '<button class="button" onclick="finalizarCompra()">Finalizar Compra</button>';
+            }
+        }
+
+        function finalizarCompra() {
+            if (carrinho.length === 0) {
+                alert("Seu carrinho está vazio. Adicione itens para finalizar a compra.");
+                return;
+            }
+            const mensagem = encodeURIComponent(
+                `Olá, gostaria de finalizar a compra dos seguintes itens:\n` +
+                carrinho.map(item => `- ${item.nome} (${item.preco})`).join("\n")
+            );
+            window.open(`https://wa.me/SEU_NUMERO_AQUI?text=${mensagem}`, "_blank"); // Substitua SEU_NUMERO_AQUI pelo número de WhatsApp desejado
+        }
+
+        function toggleCarrinho() {
+            document.getElementById("cart-items").classList.toggle("active");
+        }
+
+        function mostrarToast() {
+            const toast = document.getElementById("toast");
+            toast.classList.add("active");
+            setTimeout(() => toast.classList.remove("active"), 3000);
+        }
+
+        function renderizarProdutos() {
+            let produtosDiv = document.getElementById("produtos");
+            produtosDiv.innerHTML = "";
+            produtos.forEach(produto => {
+                produtosDiv.innerHTML += `
+                    <div class="card">
+                        <img src="${produto.imagem}" alt="${produto.nome}">
+                        <h2>${produto.nome}</h2>
+                        <p>${produto.preco}</p>
+                        <button class="button" onclick='adicionarAoCarrinho(${JSON.stringify(produto)})'>Adicionar ao Carrinho</button>
+                    </div>
+                `;
+            });
+        }
+
+        renderizarProdutos();
+        atualizarCarrinho();
+    </script>
 </body>
 </html>
